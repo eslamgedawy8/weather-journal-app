@@ -65,7 +65,7 @@ const renderUI = async () => {
     const data = await response.json()
     document.getElementById("date").innerHTML = data.newDate
     document.getElementById("city").innerHTML = data.city
-    document.getElementById("temp").innerHTML = `${data.temp}&degC`
+    document.getElementById("temp").innerHTML = `${Math.round(data.temp)}&degC`
     document.getElementById("description").innerHTML = data.description
     document.getElementById("content").innerHTML = data.feelings
   } catch (error) {
