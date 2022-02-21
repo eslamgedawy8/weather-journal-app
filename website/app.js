@@ -1,13 +1,12 @@
 /* Global Variables */
+const apiKey = 'c4fbf63796ec8738faf7bea59de8f66a&units=imperial';
+const url = "https://api.openweathermap.org/data/2.5/weather?zip="
+const server = "http://127.0.0.1:4000"
 
 // Create a new date instance dynamically with JS
 let d = new Date()
 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 let newDate = new Intl.DateTimeFormat('en-US', options).format(d)
-
-const url = "https://api.openweathermap.org/data/2.5/weather?zip="
-const apiKey = "c4fbf63796ec8738faf7bea59de8f66a"
-const server = "http://127.0.0.1:4000"
 
 document.getElementById('generate').addEventListener('click', function () {
     let zipCode = document.getElementById('zip').value
@@ -16,6 +15,7 @@ document.getElementById('generate').addEventListener('click', function () {
     if(!zipCode) {
         document.getElementById('error').innerText = 'Please enter your zip code!!'
     }else{
+        document.getElementById('error').innerText = ''
         // get weather data 
         getData(zipCode).then(val => {
             let temp = Math.round(val.main.temp)
@@ -32,7 +32,7 @@ document.getElementById('generate').addEventListener('click', function () {
             // post data
             postData(`${server}/add-weather`, objVal)
             // render UI
-            updateUI()
+            retrieveData()
         })
     }
 })
@@ -65,7 +65,7 @@ const postData = async (url, data = {}) => {
     }
 }
 
-const updateUI = async () => {
+const retrieveData = async () => {
    const res = await fetch(`${server}/get-weather`)
    try {
        const data = await res.json()
